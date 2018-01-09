@@ -8,7 +8,6 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const config = require('./config/default')
-
 const api = require('./routes/api')
 
 //session存储配置
@@ -19,8 +18,8 @@ const sessionConfig = {
     host: config.database.HOST
 }
 const THIRTY_MINTUES = 30 * 60 * 1000;
-app.keys = ['your-session-secret']
 app.use(session({
+    key: 'koa-session',
     store: new MysqlStore(sessionConfig),
     rolling: true,
     cookie: {
