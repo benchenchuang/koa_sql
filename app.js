@@ -8,6 +8,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const config = require('./config/default')
 const api = require('./routes/api')
+const cors=require('koa-cors')
 
 app.keys=['me session'];
 const setConfig={
@@ -44,6 +45,7 @@ app.use(async(ctx, next) => {
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
+app.use(cors());
 // routes
 app.use(api.routes(), api.allowedMethods())
 

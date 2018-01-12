@@ -8,6 +8,7 @@
             <thead>
                 <tr>
                     <th>名称</th>
+                    <th>描述</th>
                     <th>链接</th>
                     <th>图片</th>
                     <th>是否上线</th>
@@ -79,7 +80,7 @@
                     
                     <div class="am-form-group">
                         <div class="am-u-sm-10 am-u-sm-offset-2">
-                        <button type="button" class="am-btn am-btn-default">新建轮播</button>
+                        <button type="button" id="uapdate_btn" class="am-btn am-btn-default">新建轮播</button>
                         </div>
                     </div>
                 </div>
@@ -143,6 +144,7 @@
                         }
                         getHtml+=`<tr>
                         <td>${item.name}</td>
+                        <td>${item.content}</td>
                         <td>${item.url}</td>
                         <td class="banner_pic"><img src="/uploads/${item.pic}"></td>
                         <td>${aline}</td>
@@ -168,6 +170,7 @@
             success:function(res){
                 var data=res.data[0];
                 if(res.status==2){
+                    $('#uapdate_btn').text('更新banner')
                     banner=data.pic;
                     $('input[name=name]').val(data.name);
                     $('input[name=banner_id]').val(data.id);
@@ -200,8 +203,12 @@
     };
 
     $("#new_banner").click(function(){
+        $('input[name=name]').val('');
         $('input[name=banner_id]').val('');
+        $('input[name=content]').val('');
+        $('input[name=url]').val('');
         banner='';
+        $('#uapdate_btn').text('创建banner')
     });
 
     var banner;

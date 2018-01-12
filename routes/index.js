@@ -76,8 +76,6 @@ const postCreateBanner=async (ctx,next)=>{
             data:e.message
         }
     }
-    console.log(id)
-
     if(!id){
         await HomeModel.createBanner([name,content,url,pic,online,moment().format('YYYY-MM-DD HH:mm:ss')]).then(async res=>{
             if(res){
@@ -93,7 +91,7 @@ const postCreateBanner=async (ctx,next)=>{
             }
         });
     }else{
-        await HomeModel.updateBanner(id,name,content,url,pic,online,moment().format('YYYY-MM-DD HH:mm:ss')).then(async res=>{
+        await HomeModel.updateBanner(id,[name,content,url,pic,online,moment().format('YYYY-MM-DD HH:mm:ss')]).then(async res=>{
             if(res){
                 return ctx.body={
                     status:2,
