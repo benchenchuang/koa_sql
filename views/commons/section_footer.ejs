@@ -1,0 +1,17 @@
+                <div class="footer">
+                        <div class="copyright">Copyright ©2017 kuyi All Rights Reserved by chenchuang</div>  
+                </div>
+        <!-- 底部结束 -->
+        <script src="/js/amazeui.min.js"></script>
+        <script src="/js/app.js"></script>
+        <script>
+                function alertModel(text){
+                        var alertHtml=`<div class='alert'>${text}</div>`;
+                        $('body').append(alertHtml);
+                        setTimeout(function(){
+                                $(document).find('.alert').remove();
+                        },1500)
+                }
+        </script>
+      </body>
+</html>

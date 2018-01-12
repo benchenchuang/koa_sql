@@ -1,18 +1,20 @@
 module.exports={
     //已经登录
-    checkNotLogin:(ctx,next)=>{
-        if(ctx.session.user){
-            ctx.redirect('/');
-            return false;
+    checkNotLogin:async (ctx,next)=>{
+        try{
+            if(ctx.session.user){
+                return ctx.redirect('/admin')
+            }
+        }catch(e){
+            return ctx.redirect('/admin/login')
         }
-        next();
+        await next();
     },
     //未登录
-    checkLogin:(ctx,next)=>{
-        if(!ctx.session.user){
-            ctx.redirect('/signin');
-            return false;
+    checkLogin:async (ctx,next)=>{
+        if(!ctx.session.token){
+            return ctx.redirect('/admin/login')
         }
-        next();
+        await next();
     }
 }

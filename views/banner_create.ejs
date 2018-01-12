@@ -1,0 +1,101 @@
+<%- include('./commons/header.ejs') %>
+<%- include('./commons/section_header.ejs') %>
+<div class="main_block">
+    <div class="am-form am-form-horizontal">
+        <div class="am-form-group am-form-file">
+            <label class="am-u-sm-2 am-form-label">上传图片</label>
+            <form class="am-u-sm-10" id="am-form">
+                <button type="button" class="am-btn am-btn-primary am-btn-sm">
+                    <i class="am-icon-cloud-upload"></i> 选择要上传的图片
+                </button>
+                <input type="file" id="upload_banner" name="banner">
+            </form>
+        </div>
+        <div class="am-form-group">
+            <label class="am-u-sm-2 am-form-label">名称</label>
+            <div class="am-u-sm-10">
+                <input type="text" name="name" placeholder="轮播名称">
+            </div>
+        </div>
+        <div class="am-form-group">
+            <label class="am-u-sm-2 am-form-label">内容</label>
+            <div class="am-u-sm-10">
+                <input type="text" name="content" placeholder="轮播显示内容">
+            </div>
+        </div>
+        
+        <div class="am-form-group">
+            <label class="am-u-sm-2 am-form-label">链接网址</label>
+            <div class="am-u-sm-10">
+                <input type="text" name="url" placeholder="链接网址">
+            </div>
+        </div>
+        <div class="am-form-group">
+            <label class="am-u-sm-2 am-form-label">是否上线</label>
+            <div class="am-u-sm-10">
+                <select id="banner-select">
+                    <option value="1" >上线</option>
+                    <option value="0" selected>暂时不上线</option>
+                </select>
+                <span class="am-form-caret"></span>
+            </div>
+        </div>
+        
+        <div class="am-form-group">
+            <div class="am-u-sm-10 am-u-sm-offset-2">
+            <button type="button" class="am-btn am-btn-default">新建轮播</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var banner;
+    $("#upload_banner").change(function(){
+        var formData=new FormData(document.getElementById('am-form'));
+        $.ajax({
+            url:'/admin/upload/banner',
+            type:'post',
+            data:formData,
+            contentType:false,
+            processData:false,
+            success:function(res){
+                if(res.status==2){
+                    banner=res.data.avatar
+                }else{
+                    alertModel('上传错误');
+                }
+            },
+            error:function(err){
+                alertModel(err.statusText)
+            }
+        })
+    });
+
+    $('button.am-btn').click(function(){
+        var name=$('input[name=name]').val();
+        var content=$('input[name=content]').val();
+        var url=$('input[name=url]').val();
+        var online=$('#banner-select').val();
+        $.ajax({
+            url:'/admin/banner/create',
+            type:'post',
+            data:{
+                name:name,
+                content:content,
+                url:url,
+                online:online,
+                pic:banner
+            },
+            success:function(res){
+                alertModel(res.data); 
+                if(res.status==2){
+                    setTimeout(function(){
+                        window.location.href="/admin/banners"
+                    },1500)
+                }
+            }
+        })
+    })
+</script>
+<%- include('./commons/section_footer.ejs') %>
+

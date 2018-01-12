@@ -2,30 +2,24 @@ const Koa = require('koa')
 const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
-const session = require('koa-generic-session')
-const MysqlStore = require('koa-mysql-session')
+const session=require('koa-session');
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const config = require('./config/default')
 const api = require('./routes/api')
 
-//session存储配置
-const sessionConfig = {
-    user: config.database.USERNAME,
-    password: config.database.PASSWORD,
-    database: config.database.DATABASE,
-    host: config.database.HOST
+app.keys=['me session'];
+const setConfig={
+  key:'token',
+  maxAge:183000000,
+  overwrite: true, 
+  httpOnly: true,
+  signed: true, 
+  rolling: false,
 }
-const THIRTY_MINTUES = 30 * 60 * 1000;
-app.use(session({
-    key: 'koa-session',
-    store: new MysqlStore(sessionConfig),
-    rolling: true,
-    cookie: {
-        maxage: THIRTY_MINTUES
-    }
-}))
+
+app.use(session(setConfig,app));
 
 // error handler
 onerror(app)
