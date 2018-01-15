@@ -8,7 +8,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const config = require('./config/default')
 const api = require('./routes/api')
-const cors=require('koa-cors')
+const cors=require('koa2-cors')
 
 app.keys=['me session'];
 const setConfig={

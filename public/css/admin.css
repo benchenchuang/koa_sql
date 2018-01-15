@@ -385,5 +385,6 @@ gallery.html css
   margin: 30px auto 0;
 }
 .banner_pic img{
-  width: 300px;
+  width: 80px;
+  height: 50px;
 }
